@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false })); //prepara a aplicacao para rec
 app.use(express.json()); //prepara a aplicacao para receber dados no formato JSON
 
 //Criando usando rotas simples que estão no arquivo routes.js
-app.use('/'routes);
+app.use('/',routes);
 
 //Criando um servidor simples com Node.js e o Express
 const server = app.listen(port, () => {
