@@ -2,12 +2,16 @@ const express = require("express");
 const app = express();
 const routes = require("./routes")
 const expressLayouts = require("express-ejs-layouts");
-const { urlencoded } = require("express");
+const { urlencoded } = require("express")
 
-npm install ejs;
-npm install express-ejs-layouts;
+require("ejs");
+require("express-ejs-layouts");
+
 
 app.set('view engine','ejs');
+
+//npm install ejs
+//npm install express-ejs-layouts
 
 const port = process.env.PORT || 3000;
 //const address = "localhost"; //localhost é o nome padrao do seu computador e está ligado ao IP 127.0.0.1
