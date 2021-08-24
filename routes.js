@@ -1,20 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const app = express();
 
-// const faker = require("faker");
-
-// let db = require("./db");
-
-// db.criarDB("minhaBaseDados");
 
 //Especifica a pasta contendo arquivos estáticos. 
 //O nome 'public' não precisará ser colocado na rota 
 //Para serem alcançados os arquivos e pastas que estão dentro dele. 
 //Por isso na imagem que está na página home.ejs só há o indicativo para 'images'
 router.use(express.static('public'));
-
-
 
 //************* Exemplode Rotas ************* 
 
@@ -51,7 +43,7 @@ router.post('/cadastro/remove',(req,res)=>{
 
     if(users.length==0){
         console.log("Erro: Não há elemento a ser removido!");
-        return res.status(400).json({
+        return res.status(500).json({
             status:'error',
             error:`Removed element: ${name}`
         });
@@ -70,7 +62,7 @@ router.post('/cadastro/remove',(req,res)=>{
                 console.log("Erro ao remover elemento: ",name);
                 return res.status(400).json({
                     status:'error',
-                    error:`Removed element: ${name}`
+                    error:`Didn't Remove element: ${name}`
                 });
             }
         }
@@ -86,21 +78,20 @@ router.post('/cadastro/remove',(req,res)=>{
 });
 
 
-
 router.post('/cadastro/update',(req,res)=>{
     //substitui os valores armazenados no item do vetror dado por id, por valores fornecidos como parametro vindos do navegador.
     //recebe dados do cliente na forma de um objeto JSON
 
-    users[req.body.id].name=req.body.name;
+    users[req.body.id].name=req.body.name; //ID do objeto ou Tag: name
     users[req.body.id].email=req.body.email;
     users[req.body.id].address=req.body.address;
     users[req.body.id].age=req.body.age;
-    users[req.body.id].height=req.body.height;
+    users[req.body.id].heigth=req.body.heigth;
     users[req.body.id].vote=req.body.vote;
 
-    console.log("Dados recebidos: ",req.body);//mostra no console do servidor os dados recebidos
 
     res.sendStatus(200); //envia mensagem 200 significando que as modificacoes foram ok
+    console.log("Dados recebidos: ",req.body);//mostra no console do servidor os dados recebidos
 });
 
 router.get('/cadastro/list',(req,res)=>{
@@ -108,8 +99,24 @@ router.get('/cadastro/list',(req,res)=>{
 
 });
 
-router.post('/cadastro/addUser',(req,res)=>{
-    //Para fazer em casa: Como seria uma rotina para listar todos os itens cadastrados?
+router.post('/cadastro/add',(req,res)=>{
+    let user={name:"",email:"",address:"",heigth:"",age:"",vote:""};
+
+    user.name = req.body._name;
+    user.email = req.body._email;
+    user.address = req.body._address;
+    user.heigth = req.body._heigth;
+    user.age = req.body._age;
+    user.vote = req.body._vote;
+
+    users.push(user);
+    console.log("Usuário cadastrado: ",user);
+    console.log("Lista dos usuários: ",users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
+    res.sendStatus(200);
+    res.status(200).json({
+        status:'sucess',
+        data: `Usuário ${user} foi adiocionado com sucesso!`
+    });
 
 });
 

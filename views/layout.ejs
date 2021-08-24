@@ -17,7 +17,7 @@
     <title>First App</title>
 </head>
 <body>
-    <div class="display-3 text-center bg-secondary" style="margin-bottom:0">
+    <div class="display-4 text-left bg-info text-light" style="margin-bottom:0">
         First App
     </div>
     <!-- <header>
@@ -38,10 +38,10 @@
 
     <%- include('pages/header') %>
      
-    <!-- a chjamada para script.js foi colocada aqui para que possa ser vista antes da criacao da tabela presente no arquivo cadastro.ejs. Assim a funcao update() poderá ser considerada declarada antes de chegar no código presente em cadastro.ejs. -->
+    <!-- a chamada para script.js foi colocada aqui para que possa ser vista antes da criacao da tabela presente no arquivo cadastro.ejs. Assim a funcao update() poderá ser considerada declarada antes de chegar no código presente em cadastro.ejs. -->
 
     <main>
-        <div class="container">
+        <div class="container-fluid">
             <%- body %>
         </div>
 
@@ -50,8 +50,8 @@
     <footer>
         <div class="d-flex">
 
-            <div class="p-2 bg-info flex-grow-1 small text-white">
-                <i>Copyleft</i> Wellington W. F. Sarmento - all rights reserved.   Página sob licença <a class="text-light" href="https://www.gnu.org/licenses/gpl-3.0.txt">Gnu Public License version 3.0.</a>
+            <div class="p-1 bg-info text-center flex-grow-1 small text-light">
+                <i>Copyleft</i> João André França Mourão - all rights reserved.   Página sob licença <a class="text-light" href="https://www.gnu.org/licenses/gpl-3.0.txt">Gnu Public License version 3.0.</a>
             </div>
         </div>
     </footer>
