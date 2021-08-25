@@ -115,7 +115,7 @@ router.post('/cadastro/add',(req,res)=>{
     res.sendStatus(200);
     res.status(200).json({
         status:'sucess',
-        data: `Usuário ${user} foi adiocionado com sucesso!`
+        data: `Usuário ${user} foi adicionado com sucesso!`
     });
 
 });
