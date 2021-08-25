@@ -4,8 +4,13 @@
 <p>
 
 </p>
+    <font face="roboto condensed" color="#02899C">
     <h3>Usuários Cadastrados</h3>
-    <p>Lista de usuários Cadastrados no sistema.</p>            
+    </font>
+    <font face="open sans" color="#02545F">
+    <p>Lista de usuários Cadastrados no sistema.</p>    
+    </font>
+
     <table class="table table-hover bg-light" id="list">
         <thead class="thead-dark">
         <tr>
@@ -76,7 +81,10 @@
             <%} //If-Else %>   
         </tbody>
     </table>
+    <font face="roboto condensed" color="#02899C">
     <h3>Cadastrar novo usuário:</h3>
+    </font>
+    <font face="open sans" color="#02545F">
     <form action="/cadastro/add" method="post">
         <div class="form-group">
             <label for="_name">Nome:</label>
@@ -105,6 +113,7 @@
         <div class="form-group">
             <input type="submit" value="Enviar"  class="btn btn-success">
         </div>
+      </font>
     </form>
     
 </div>
