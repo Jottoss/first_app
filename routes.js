@@ -95,7 +95,15 @@ router.post('/cadastro/update',(req,res)=>{
 });
 
 router.get('/cadastro/list',(req,res)=>{
-    //Para fazer em casa: Como seria uma rotina para listar todos os itens cadastrados?
+    
+    console.log("Listagem de Usuários: ",users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
+    //let dados = JSON.parse(users);
+    res.send(JSON.stringify(users));
+    res.sendStatus(200);
+    res.status(200).json({
+        status:'sucess',
+        data: `Lista foi adicionada com sucesso!`
+    });
 
 });
 

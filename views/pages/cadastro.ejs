@@ -29,6 +29,7 @@
 
             <% let linkRemove="/cadastro/remove/"; %>
             <% let linkUpdate="/cadastro/update/"; %>
+            <% let linkAdd="/cadastro/add/"; %>
 
             <% if(users.length >0){%>
                 <% for(let index=0;index<users.length;index++){ %>
@@ -116,4 +117,27 @@
       </font>
     </form>
     
+ <!-- <% let linklist="/cadastro/list/"; %> -->
+
+    <input type="button" onclick="listar('/cadastro/list/')" value="Listar Usuários"  class="btn btn-success">
+    <div class="table-responsive-xl ">
+        <h2>Lista de Usuários</h2>
+        <p>Lista de usuários Cadastrados no sistema.</p>            
+        <table class="table table-hover bg-light" id="list-users">
+            <thead class="thead-light">
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Idade</th>
+                <th>Altura</th>
+                <th>Vota?</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    
+</div>
+
+
 </div>
