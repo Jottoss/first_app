@@ -26,13 +26,12 @@
         </thead>
         <tbody>
               
-
             <% let linkRemove="/cadastro/remove/"; %>
             <% let linkUpdate="/cadastro/update/"; %>
             <% let linkAdd="/cadastro/add/"; %>
 
             <% if(users.length >0){%>
-                <% for(let index=0;index<users.length;index++){ %>
+                <% for(let index=0; index < users.length;index++){ %>
                     <tr data-index-row="<%= index %>">
                         
                     <td data-index-row="<%=index%>">
@@ -49,18 +48,17 @@
                     </td>
                     <td data-index-row="<%=index%>">
                         <span  class="show"><%= users[index].age %></span>
-                        <input type="text" name="age"  class="hidden" value="<%= users[index].age %>">
+                        <input type="number" name="age"  min="1" max="100" step="1" class="hidden" value="<%= users[index].age %>">
                         
                     </td>
                     <td data-index-row="<%=index%>">
                         <span  class="show"><%= users[index].heigth %></span>
-                        <input type="text" name="heigth"  class="hidden" value="<%= users[index].heigth %>">
+                        <input type="number" name="heigth" class="hidden" value="<%= users[index].heigth %>">
                         
                     </td>
                     <td data-index-row="<%=index%>">
                         <span  class="show"><%= users[index].vote %></span>
-                        <input type="text" name="vote" class="hidden" value="<%= users[index].vote %>">
-                        
+                        <input type="checkbox" name="vote" class="hidden" value="<%= users[index].vote %>">
                     </td>
                     <td data-index-row="<%=index%>" class="hidden" data-index-row="<%=index%>">
                         <input type="button" value="Atualizar" class="hidden" >
@@ -86,36 +84,36 @@
     <h3>Cadastrar novo usuário:</h3>
     </font>
     <font face="open sans" color="#02545F">
-    <form action="/cadastro/add" method="post">
+        <form name="cadastro" action="#">
         <div class="form-group">
             <label for="_name">Nome:</label>
-            <input type="text" name="_name" id="_name" class="form-control">
+            <input type="text" name="_name" id="_name" class="form-control" required placeholder="Preencha seu nome">
         </div>
         <div class="form-group">
             <label for="_email">E-mail:</label>
-            <input type="text" name="_email" id="_email" class="form-control">
+            <input type="text" name="_email" id="_email" class="form-control" required="" placeholder="Preencha o e-mail">
         </div>
         <div class="form-group">
             <label for="_address">Endereço:</label>
-            <input type="text" name="_address" id="_address" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="_heigth">Altura:</label>
-            <input type="text" name="_heigth" id="_heigth" class="form-control">
+            <input type="text" name="_address" id="_address" class="form-control" required placeholder="Preencha o endereço">
         </div>
         <div class="form-group">
             <label for="_age">Idade:</label>
-            <input type="text" name="_age" id="_age" class="form-control">
+            <input type="number" name="_age" id="_age" class="form-control" size = "2" required placeholder="Preencha a idade">
+        </div>
+        <div class="form-group">
+            <label for="_heigth">Altura:</label>
+            <input type="number" name="_heigth" id="_height" class="form-control" sizee = "3"  required placeholder="Preencha a altura">
         </div>
         <div class="form-group">
             <label for="_vote">Votou:</label>
-            <input type="text" name="_vote" id="_vote" class="form-control">
+            <input type="checkbox" name="_vote" id="_vote" class="form-control">
         </div>
         <div class="form-group">
-            <input type="submit" value="Enviar"  class="btn btn-success">
+            <input type="button" onclick="add(document.cadastro,'<%=linkAdd%>')" value="Enviar"  class="btn btn-success"> <!-- chama a função add-->
         </div>
-      </font>
     </form>
+    </font>
     
  <!-- <% let linklist="/cadastro/list/"; %> -->
 

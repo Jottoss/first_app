@@ -17,7 +17,7 @@ const port = process.env.PORT || 3000;
 // a palavra reservada global cria uma variável ou objeto global para o sistemas. Ele pode ser visto em qualquer parta do código ou dos módulos do projeto. Assim, Users podem ser vistos tanto aqui no index.js quanto em routes.js
 global.users =[];
 
-for (let cont=0;cont<25;cont++){
+for (let cont=0;cont<22;cont++){
     users.push({name:faker.name.findName(),email:faker.internet.email(),address:faker.address.streetAddress(),age:utils.getRandomByInterval(15,50,true),heigth:utils.getRandomByInterval(1.50,1.70,false).toFixed(2),vote:toggleBol});
     toggleBol=!toggleBol;
 }

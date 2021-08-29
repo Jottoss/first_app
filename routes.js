@@ -8,18 +8,6 @@ const router = express.Router();
 //Por isso na imagem que está na página home.ejs só há o indicativo para 'images'
 router.use(express.static('public'));
 
-//************* Exemplode Rotas ************* 
-
-/*
-http://localhost:3030/css
-http://localhost:3030/images
-http://localhost:3030/index.html
-/ = http://localhost:3030/
-/about = http://localhost:3030/about
-/cadastro =  http://localhost:3030/cadastro
-*/
-
-
 //Req é um objeto que recebe dados da requisição HTTP feita (request). Res permite enviar uma resposta ao navegador (Response)
 router.get('/',(req,res)=>{ //callback - funcao que trata dado evento GET
     res.render('pages/home');
@@ -125,6 +113,11 @@ router.post('/cadastro/add',(req,res)=>{
         status:'sucess',
         data: `Usuário ${user} foi adicionado com sucesso!`
     });
+
+router.get('/list/list',(req,res)=>{
+    console.log(users);
+    res.status(200).send(JSON.stringify(users));
+});
 
 });
 
