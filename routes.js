@@ -8,6 +8,18 @@ const router = express.Router();
 //Por isso na imagem que está na página home.ejs só há o indicativo para 'images'
 router.use(express.static('public'));
 
+//************* Exemplode Rotas ************* 
+
+/*
+http://localhost:3030/css
+http://localhost:3030/images
+http://localhost:3030/index.html
+/ = http://localhost:3030/
+/about = http://localhost:3030/about
+/cadastro =  http://localhost:3030/cadastro
+*/
+
+
 //Req é um objeto que recebe dados da requisição HTTP feita (request). Res permite enviar uma resposta ao navegador (Response)
 router.get('/',(req,res)=>{ //callback - funcao que trata dado evento GET
     res.render('pages/home');
@@ -77,47 +89,40 @@ router.post('/cadastro/update',(req,res)=>{
     users[req.body.id].heigth=req.body.heigth;
     users[req.body.id].vote=req.body.vote;
 
-
     res.sendStatus(200); //envia mensagem 200 significando que as modificacoes foram ok
     console.log("Dados recebidos: ",req.body);//mostra no console do servidor os dados recebidos
 });
 
 router.get('/cadastro/list',(req,res)=>{
-    
-    console.log("Listagem de Usuários: ",users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
-    //let dados = JSON.parse(users);
-    res.send(JSON.stringify(users));
-    res.sendStatus(200);
-    res.status(200).json({
-        status:'sucess',
-        data: `Lista foi adicionada com sucesso!`
-    });
 
+    console.log("Olha a lista ae: ",users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
+    //captura os dados de usuários (users) e transforma o vetor de objetos em uma string JSON, para ser enviada ao cliente
+    res.send(JSON.stringify(users));
+    // res.status(200).json({
+    //     status:'sucess',
+    //     data: `Lista foi adiocionado com sucesso!`
+    // });
 });
 
 router.post('/cadastro/add',(req,res)=>{
+    
     let user={name:"",email:"",address:"",heigth:"",age:"",vote:""};
 
-    user.name = req.body._name;
-    user.email = req.body._email;
-    user.address = req.body._address;
-    user.heigth = req.body._heigth;
-    user.age = req.body._age;
-    user.vote = req.body._vote;
+    user.name = req.body.name;
+    user.email = req.body.email;
+    user.address = req.body.address;
+    user.heigth = req.body.heigth;
+    user.age = req.body.age;
+    user.vote = req.body.vote;
 
     users.push(user);
-    console.log("Usuário cadastrado: ",user);
-    console.log("Lista dos usuários: ",users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
+    console.log("Usuário cadastrado: ", user);
+    console.log("Lista dos usuários: ", users); //nao use esta linha se tiver muitos elementos em users pois causara lentidao no servidor
     res.sendStatus(200);
     res.status(200).json({
         status:'sucess',
-        data: `Usuário ${user} foi adicionado com sucesso!`
+        data: `Usuário ${user} foi adiocionado com sucesso!`
     });
-
-router.get('/list/list',(req,res)=>{
-    console.log(users);
-    res.status(200).send(JSON.stringify(users));
-});
 
 });
 

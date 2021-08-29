@@ -1,11 +1,15 @@
 let cadastro;
 
-//instalar o nodemon
+//Carrega a lista de usuário ao carregar a página chamando a função list
+window.onload = listar('/cadastro/list');
+
+//Essa função recebe uma lista de objetos com os dados atualizados de usuário. Valida um a um e caso haja algum erro
+//indica o campo errado e retorna false 
 function validaUpdate(data){
-    alert(data[5].checked);
+
     for(i = 0; i<6;i++){   
         if (data[i].value == "" || data[i].value == null){
-            alert("Alguma informação não foi preenchida")
+            alert("Os campos de dados de usuário não podem estar vazios.")
             data[i].focus();
             return false;
         }
@@ -13,29 +17,25 @@ function validaUpdate(data){
 
     if(data[1].value.indexOf("@") == -1 ||
     data[1].value.indexOf(".") == -1) {
-        alert("E-mail inválido.");
+        alert("Esse e-mail é inválido.");
         data[1].focus();
         return false;
     }
 
-    if (!Number.isInteger(Number(data[3].value))){
-        alert("O número precisa está em inteiro");
+    if (!Number.isInteger(Number(data[3].value))&&(Number(data[3].value>0))){
+        alert("A idade deve ser um valor inteiro e positivo!");
+        data[3].focus();
         return false;
     }
-
-    alert("Sucesso!!!")
-    
     return true;
     
     
 }
 
+//Essa função recebe um objeto com os dados de cadastro de usuário. Valida um a um e caso haja algum erro
+//indica o local e retorna false 
 function validaForm(data){
-    /*
-o parâmetro frm desta função significa: this.form,
-pois a chamada da função - validaForm(this) foi
-definida na tag form.
-*/  
+
     //validação de nome
     if (data._name.value == "") {
         alert("Nenhum nome foi digitado, verifique o campo Nome e tente novamente.");
@@ -74,7 +74,7 @@ definida na tag form.
     }
 
     if (data._age.value == "") {
-        alert("Nenhuma idade foi digitado, verifique o campo Idade e tente novamente.");
+        alert("Nenhuma idade foi digitada, verifique o campo Idade e tente novamente.");
         data._age.focus();
         return false;
     }
@@ -85,7 +85,7 @@ definida na tag form.
     }
 
     if (data._height.value == "") {
-        alert("Nenhuma altura foi digitado, verifique o campo Altura e tente novamente.");
+        alert("Nenhuma altura foi digitada, verifique o campo Altura e tente novamente.");
         data._height.focus();
         return false;
     }
@@ -95,28 +95,7 @@ definida na tag form.
         data._height.focus();
         return false;
     }
-    
 
-//Verifica se o campo nome foi preenchido e
-    //contém no mínimo três caracteres.
-    // if(frm.nome.value == "`" || frm.nome.value == null || frm.nome.value.lenght < 3) {
-    //     //É mostrado um alerta, caso o campo esteja vazio.
-    //     alert("Por favor, indique o seu nome.");
-    //     //Foi definido um focus no campo.
-    //     frm.nome.focus();
-    //     //o form não é enviado.
-    //     return false;
-    // }
-    //o campo e-mail precisa de conter: "@", "." e não pode estar vazio
-    // if(frm.email.value.indexOf("@") == -1 ||
-    //   frm.email.valueOf.indexOf(".") == -1 ||
-    //   frm.email.value == "" ||
-    //   frm.email.value == null) {
-    //     alert("Por favor, indique um e-mail válido.");
-    //     frm.email.focus();
-    //     return false;
-    // }
-    alert(data);
     return true;
 
 }
@@ -178,20 +157,6 @@ function update(index,link){
                 inputs[cont].disabled=false;
             } else inputs[cont].disabled=true;
         }
-    //    // essa suncao esta sendo colocada aqui só para dar uma parada e você poder ver os inputs desabilitados
-    //    //funcao que espera um tempo N, dado em milissegundos, e então chama uma função (callback). No caso, vamos usar 2000 ms = 2s
-    //    //essa funcao foi construida somente para que voce possa ver os inputs ficando desabilitados. Nao precisa usar.
-    //    function sleep(milliseconds) {
-    //         const date = Date.now();
-    //         let currentDate = null;
-    //         do {
-    //             currentDate = Date.now();
-    //         } while (currentDate - date < milliseconds);
-    //     }
-    //     console.log("Mostra essa mensagem no console, primeiro!");
-    //     sleep(2000)
-    //     console.log("Pronto, você consegue ver seus inputs desabilitados!");
-    //    //fim do codigo usado para ver os inputs desabiulitados
 
         //preenche um objeto com o indice da linha da tabela e os valores dos campos input do tipo text
         data.id = index; //esse dado nao existe no vetor Users do lado do servidor (backend), mas preciso dele para apontar o indice do vetor que quero modificar
@@ -199,7 +164,8 @@ function update(index,link){
         data.email = inputs[1].value;
         data.address = inputs[2].value;
         data.age = inputs[3].value;
-        data.heigth = inputs[4].value;
+        //toFixed faz com que as casas decimais do valor sejam sempre duas. 1.8 se torna 1.80, 1 se torna 1.00
+        data.heigth =  parseFloat(inputs[4].value).toFixed(2);
         data.vote = inputs[5].checked;
 
         dataToSend = JSON.stringify(data); //transforma o objeto literal em uma string JSON que é a representação em string de um objeto JSON. Se quisesse o objeto no formato binario, usaria: JSON.parse(data)
@@ -224,6 +190,7 @@ function update(index,link){
             // baseado nos valores acima apresentados, o codigo abaixo mostra o que foi enviado pelo servidor como resposta ao envio de dados. No caso, se o request foi finalizado e o response foi recebido, a mensagem recebida do servidor eh mostrada no console do navegador. esse codigo foi feito apenas para verificar se tudo ocorreu bem no envio
 
             if (http.readyState === 4 && http.status === 200) { //testa se o envio foi bem sucedido
+                alert('Usuário atualizado com sucesso!');
                 for(let cont=0;cont<spans.length;cont++){
                     if(spans[cont].className=="hidden"){
                         if (cont==5){
@@ -252,30 +219,15 @@ function update(index,link){
                 linkUpdate.className='show';
                 linkRemove.className='show';
                 tds[lenTds-2].className='hidden';
+
+                //chamada de função de listagem de usuários na segunda tabela
+                listar('/cadastro/list');  
             } else {
                 console.log("Ocorreu erro no processamento dos dados no servidor: ",http.responseText);
-            }     
+            }
+
+               
         }
-    /*
-    readyState:
-    0: request not initialized
-    1: server connection established
-    2: request received
-    3: processing request
-    4: request finished and response is ready
-    status:
-    200: "OK"
-    403: "Forbidden"
-    404: "Page not found"
-    */
-    // baseado nos valores acima apresentados, o codigo abaixo mostra o que foi enviado pelo servidor como resposta ao envio de dados. No caso, se o request foi finalizado e o response foi recebido, a mensagem recebida do servidor eh mostrada no console do navegador. esse codigo foi feito apenas para verificar se tudo ocorreu bem no envio
-
-    // http.onreadystatechange = (e)=>{
-    //     if (http.readyState === 4 && http.status === 200) { //testa se o envio foi bem sucedido
-    //         console.log(http.responseText);
-
-    //     }
-    // }
 
     }});  
     
@@ -321,33 +273,38 @@ function remove(index,_name,link){ //(index,link)
         if (http.readyState === 4 && http.status === 200) {
             tr.remove();
             console.log(`Item ${index} removido com sucesso!`);
+            //chamada de função de listagem de usuários na segunda tabela
+            listar('/cadastro/list');
 
         } else {
             console.log(`Erro durante a tentativa de remoção do usuário: ${_name}! Código do Erro: ${http.status}`); 
         }
         
-
     }
 }
-   
+
+//Adiciona um usuario no users do servidor, primeiro parâmetro recebe a identificação do formulário (de cadastro), enquanto o segundo parâmetro recebe o link da rota de cadastro
 function add(form, link){    
     if (validaForm(form)){
         const http = new XMLHttpRequest(); //cria um objeto para requisição ao servidor
         const url=link;
 
+        //array que será enviado ao servidor
         let data = {id:"",name:"",email:"",address:"",age:"",heigth:"",vote:""};
         let dataToSend;
     
         http.open("POST",link,true); //abre uma comunicação com o servidor através de uma requisição POST
 
+        
         http.setRequestHeader('Content-Type','application/json'); //constroi um cabecalho http para envio dos dados
         data.id = 1000; //esse dado nao existe no vetor Users do lado do servidor (backend), mas preciso dele para apontar o indice do vetor que quero modificar
+        //cada linha abaixo captura um campo de usuário e insere no nosso array de objetos que será enviado ao servidor
         data.name = form._name.value;
-        alert(data.name);
         data.email = form._email.value;
         data.address = form._address.value;
         data.age = form._age.value;
-        data.heigth = form._height.value;
+        //toFixed faz com que as casas decimais do valor sejam sempre duas. 1.8 se torna 1.80, 1 se torna 1.00
+        data.heigth = parseFloat(form._height.value).toFixed(2);
         data.vote = form._vote.checked;
 
         //dataToSend = JSON.stringify({id:index}); //transforma o objeto literal em uma string JSON que é a representação em string de um objeto JSON
@@ -374,15 +331,13 @@ function add(form, link){
         // baseado nos valores acima apresentados, o codigo abaixo mostra o que foi enviado pelo servidor como resposta ao envio de dados. No caso, se o request foi finalizado e o response foi recebido, a mensagem recebida do servidor eh mostrada no console do navegador. esse codigo foi feito apenas para verificar se tudo ocorreu bem no envio
         http.onload = ()=>{
             
-            //seleciona todas as tags que sejam td 
-            // let tr = document.querySelector(`table#list > tbody > tr[data-index-row='${index}']`);
-    
             if (http.readyState === 4 && http.status === 200) {
-                alert("Ei man, deu bom ó");
-                list(data);
+                alert("Usuário adicionado com sucesso!");
+                //chamada de função de listagem de usuários na segunda tabela
+                listar('/cadastro/list');
     
             } else {
-                console.log(`Erro durante a tentativa de remoção do usuário: ${_name}! Código do Erro: ${http.status}`); 
+                console.log(`Erro durante a tentativa de adição do usuário: ${_name}! Código do Erro: ${http.status}`); 
             }
             
     
@@ -390,21 +345,34 @@ function add(form, link){
     };
 }
 
+//essa função limpa para depois adicionar linhas em uma tabela (table), com conteúdo de cada célula inserido no parâmetro content (deve ser um array de objetos)
+//inpirado por https://stackoverflow.com/questions/8302166/dynamic-creation-of-table-with-dom https://stackoverflow.com/users/376743/rightsaidfred
 function populateTable(table, content) {
-    alert('<span>'+content[0].name+'</span>');
-    for (var i = 0; i < content.length; ++i) {
-        keys = Object.keys(content[i]);
+    //limpeza de tabela, o método firstChild captura o primeiro nodo na lista de nodos da tabela
+    while (table.firstChild){
+       table.removeChild(table.firstChild);
+    }
+    //salva em keys as chaves de cada objeto (ex:name, email, address, etc...)
+    keys = Object.keys(content[0]);
+
+    //adiciona linha a linha, seguindo o controlador i
+    for (var i = 0; i < content.length; ++i) {     
+        //cria um novo documento com <tr></tr>
         var row = document.createElement('tr');
         
+        //adiciona célula a célula na tabela
         for (var j=0;j<6;j++){
+            //cria e insere uma nova célula na linha com <td></td>
             var newCell =  row.insertCell(j);
+            //insere dentro da célula com código html <span>dado do usuário</span>
             newCell.innerHTML = '<span>'+content[i][keys[j]]+'</span>';
         }
+        //insere a nova linha dentro da tabela!
         table.appendChild(row);
     }
-    return table;
 }
 
+//cria/atualiza a lista de usuários no fim da página e retorna a lista de usuários do servidor
 function listar(link){
     
     const http = new XMLHttpRequest(); //cria um objeto para requisição ao servidor
@@ -412,7 +380,10 @@ function listar(link){
 
     http.open('GET',link,true); //abre uma comunicação com o servidor através de uma requisição POST
     http.setRequestHeader('Content-Type','application/json'); //constroi um cabecalho http para envio dos dados
-    http.send(null);//envia dados para o servidor na forma de JSON
+    
+    //send vazio pois não desejamos enviar nada para o servidor, estamos fazendo apenas uma requisição
+    http.send();
+
     /* este codigo abaixo foi colocado para que a interface de cadastro so seja modificada quando se receber um aviso do servidor que a modificacao foi feita com sucesso. No caso o aviso vem na forma do codigo 200 de HTTP: OK */
 
     /*
@@ -432,37 +403,17 @@ function listar(link){
 
     http.onload = ()=>{
         if (http.readyState === 4 && http.status === 200) {
-            let lista = JSON.parse(http.response)
-            populateTable(document.getElementById('list-users'), lista);
+            //transforma a string  em formato JSON enviada pelo servidor novamente no seu tipo de dado anterior (lista de objetos)
+            let lista = JSON.parse(http.response);
+
+            //seleciona qual tabela será criada com os dados de usuários, se ao invés de list-users colocarmos list, a tabela de cima será alterada!
+            let tb = document.querySelector(`table#list-users > tbody`);
+            populateTable(tb, lista);
+            return lista;
         } else {
             console.log(`Erro durante a tentativa de remoção do usuário: ${_name}! Código do Erro: ${http.status}`); 
         }
         
 
     }
-    
-    //populateTable(document.getElementById('list-users'), datas);
-
-    //fazer em casa. Lista de usuários.
-
-    //Primeira parte: envia mensagem para o servidor pedindo uma listagem dos usuários
-
-    //Segunda parte: apos recebimento da lista de usuarios, no formato JSON, colocar os usuarios na interface
-    // let tableList = document.getElementById("list");
-    // alert("Teste list 1")
-    // let tr = document.createElement("tr");
-    // let td = document.createElement("td");
-    // let span = document.createElement("span");
-    // var cont;
-    // alert("Teste list 2")
-    // for(cont = 0;cont<2;cont++){ 
-    //     alert("Teste list 3")
-    //     td.setAttribute(`data-index-row=${cont}`);
-    //     span.innerHTML =  Object.keys(datas[cont])[0] //keys 0 - name, 1 - email
-    //     span.className="show";
-    //     td.appendChild(span);
-    //     tr.appendChild(td);
-        
-    //     tableList.appendChild(tr);
-    // }
 }

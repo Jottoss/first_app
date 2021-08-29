@@ -31,7 +31,7 @@
             <% let linkAdd="/cadastro/add/"; %>
 
             <% if(users.length >0){%>
-                <% for(let index=0; index < users.length;index++){ %>
+                <% for(let index=0;index<users.length;index++){ %>
                     <tr data-index-row="<%= index %>">
                         
                     <td data-index-row="<%=index%>">
@@ -80,52 +80,55 @@
             <%} //If-Else %>   
         </tbody>
     </table>
+
     <font face="roboto condensed" color="#02899C">
     <h3>Cadastrar novo usuário:</h3>
     </font>
     <font face="open sans" color="#02545F">
-        <form name="cadastro" action="#">
+            <form name="cadastro" action="#">
         <div class="form-group">
             <label for="_name">Nome:</label>
-            <input type="text" name="_name" id="_name" class="form-control" required placeholder="Preencha seu nome">
+            <input type="text" name="_name" id="_name" class="form-control">
         </div>
         <div class="form-group">
             <label for="_email">E-mail:</label>
-            <input type="text" name="_email" id="_email" class="form-control" required="" placeholder="Preencha o e-mail">
+            <input type="text" name="_email" id="_email" class="form-control">
         </div>
         <div class="form-group">
             <label for="_address">Endereço:</label>
-            <input type="text" name="_address" id="_address" class="form-control" required placeholder="Preencha o endereço">
+            <input type="text" name="_address" id="_address" class="form-control">
         </div>
         <div class="form-group">
             <label for="_age">Idade:</label>
-            <input type="number" name="_age" id="_age" class="form-control" size = "2" required placeholder="Preencha a idade">
+            <input type="number" name="_age" id="_age" class="form-control">
         </div>
         <div class="form-group">
             <label for="_heigth">Altura:</label>
-            <input type="number" name="_heigth" id="_height" class="form-control" sizee = "3"  required placeholder="Preencha a altura">
+            <input type="number" name="_heigth" id="_height" class="form-control">
         </div>
         <div class="form-group">
             <label for="_vote">Votou:</label>
             <input type="checkbox" name="_vote" id="_vote" class="form-control">
         </div>
         <div class="form-group">
-            <input type="button" onclick="add(document.cadastro,'<%=linkAdd%>')" value="Enviar"  class="btn btn-success"> <!-- chama a função add-->
+            <input type="button" onclick="add(document.cadastro,'<%=linkAdd%>')" value="Enviar"  class="btn btn-success">
         </div>
     </form>
     </font>
     
- <!-- <% let linklist="/cadastro/list/"; %> -->
 
-    <input type="button" onclick="listar('/cadastro/list/')" value="Listar Usuários"  class="btn btn-success">
+    <br>
+    <hr>
+    <br>
+    <!-- Nova tabela criada ao fim da página, será usada para listagem de usuários! -->
     <div class="table-responsive-xl ">
-        <p>
         <font face="roboto condensed" color="#02899C">
         <h2>Lista de Usuários</h2>
         </font>
         <font face="open sans" color="#02545F">
-        <p>Lista de usuários Cadastrados no sistema.</p>
-        </font>            
+        <p>Lista de usuários Cadastrados no sistema.</p>   
+        </font>
+
         <table class="table table-hover bg-light" id="list-users">
             <thead class="thead-light">
             <tr>
@@ -137,10 +140,10 @@
                 <th>Vota?</th>
             </tr>
             </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
-    
-</div>
 
 
 </div>
