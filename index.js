@@ -9,9 +9,6 @@ const utils = require("./utils");
 const faker = require("faker");
 let toggleBol=true;
 
-require("ejs");
-require("express-ejs-layouts");
-
 app.set('view engine','ejs');
 
 const port = process.env.PORT || 3000;
